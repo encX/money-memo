@@ -4,6 +4,13 @@ import { AssetRecord, AssetRecordWithRelations } from './asset-record.model';
 @model()
 export class Asset extends Entity {
   @property({
+    type: 'number',
+    id: true,
+    generated: false,
+  })
+  id?: number;
+  
+  @property({
     type: 'string',
     required: true,
   })
