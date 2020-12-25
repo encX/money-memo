@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {AssetType} from './asset-type.model';
 
 @model()
 export class AssetRecord extends Entity {
@@ -21,10 +22,8 @@ export class AssetRecord extends Entity {
   })
   amount: number;
 
-  @property({
-    type: 'number',
-  })
-  assetTypeId?: number;
+  @belongsTo(() => AssetType)
+  assetTypeId: number;
 
   constructor(data?: Partial<AssetRecord>) {
     super(data);

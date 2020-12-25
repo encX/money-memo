@@ -1,4 +1,4 @@
-import {Entity, model, property, hasOne} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
 import {AssetRecord} from './asset-record.model';
 
 @model()
@@ -22,8 +22,8 @@ export class AssetType extends Entity {
   })
   color: string;
 
-  @hasOne(() => AssetRecord)
-  assetRecord: AssetRecord;
+  @hasMany(() => AssetRecord)
+  assetRecords: AssetRecord[];
 
   constructor(data?: Partial<AssetType>) {
     super(data);

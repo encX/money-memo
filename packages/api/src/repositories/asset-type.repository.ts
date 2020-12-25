@@ -1,4 +1,4 @@
-import {DefaultCrudRepository, repository, HasOneRepositoryFactory} from '@loopback/repository';
+import {DefaultCrudRepository, repository, HasManyRepositoryFactory} from '@loopback/repository';
 import {AssetType, AssetTypeRelations, AssetRecord} from '../models';
 import {PgDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
@@ -10,12 +10,13 @@ export class AssetTypeRepository extends DefaultCrudRepository<
   AssetTypeRelations
 > {
 
-  public readonly assetRecord: HasOneRepositoryFactory<AssetRecord, typeof AssetType.prototype.id>;
+  public readonly assetRecords: HasManyRepositoryFactory<AssetRecord, typeof AssetType.prototype.id>;
 
   constructor(
     @inject('datasources.Pg') dataSource: PgDataSource, @repository.getter('AssetRecordRepository') protected assetRecordRepositoryGetter: Getter<AssetRecordRepository>,
   ) {
     super(AssetType, dataSource);
-    this.assetRecord = this.createHasOneRepositoryFactoryFor('assetRecord', assetRecordRepositoryGetter);
+    this.assetRecords = this.createHasManyRepositoryFactoryFor('assetRecords', assetRecordRepositoryGetter,);
+    this.registerInclusionResolver('assetRecords', this.assetRecords.inclusionResolver);
   }
 }

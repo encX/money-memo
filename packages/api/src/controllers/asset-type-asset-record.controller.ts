@@ -26,26 +26,26 @@ export class AssetTypeAssetRecordController {
     @repository(AssetTypeRepository) protected assetTypeRepository: AssetTypeRepository,
   ) { }
 
-  @get('/asset-types/{id}/asset-record', {
+  @get('/asset-types/{id}/asset-records', {
     responses: {
       '200': {
-        description: 'AssetType has one AssetRecord',
+        description: 'Array of AssetType has many AssetRecord',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(AssetRecord),
+            schema: {type: 'array', items: getModelSchemaRef(AssetRecord)},
           },
         },
       },
     },
   })
-  async get(
+  async find(
     @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<AssetRecord>,
-  ): Promise<AssetRecord> {
-    return this.assetTypeRepository.assetRecord(id).get(filter);
+  ): Promise<AssetRecord[]> {
+    return this.assetTypeRepository.assetRecords(id).find(filter);
   }
 
-  @post('/asset-types/{id}/asset-record', {
+  @post('/asset-types/{id}/asset-records', {
     responses: {
       '200': {
         description: 'AssetType model instance',
@@ -67,10 +67,10 @@ export class AssetTypeAssetRecordController {
       },
     }) assetRecord: Omit<AssetRecord, 'id'>,
   ): Promise<AssetRecord> {
-    return this.assetTypeRepository.assetRecord(id).create(assetRecord);
+    return this.assetTypeRepository.assetRecords(id).create(assetRecord);
   }
 
-  @patch('/asset-types/{id}/asset-record', {
+  @patch('/asset-types/{id}/asset-records', {
     responses: {
       '200': {
         description: 'AssetType.AssetRecord PATCH success count',
@@ -90,10 +90,10 @@ export class AssetTypeAssetRecordController {
     assetRecord: Partial<AssetRecord>,
     @param.query.object('where', getWhereSchemaFor(AssetRecord)) where?: Where<AssetRecord>,
   ): Promise<Count> {
-    return this.assetTypeRepository.assetRecord(id).patch(assetRecord, where);
+    return this.assetTypeRepository.assetRecords(id).patch(assetRecord, where);
   }
 
-  @del('/asset-types/{id}/asset-record', {
+  @del('/asset-types/{id}/asset-records', {
     responses: {
       '200': {
         description: 'AssetType.AssetRecord DELETE success count',
@@ -105,6 +105,6 @@ export class AssetTypeAssetRecordController {
     @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(AssetRecord)) where?: Where<AssetRecord>,
   ): Promise<Count> {
-    return this.assetTypeRepository.assetRecord(id).delete(where);
+    return this.assetTypeRepository.assetRecords(id).delete(where);
   }
 }
