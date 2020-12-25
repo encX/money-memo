@@ -1,5 +1,6 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, model, property, hasMany, belongsTo} from '@loopback/repository';
 import {AssetRecord} from './asset-record.model';
+import {User} from './user.model';
 
 @model()
 export class AssetType extends Entity {
@@ -24,6 +25,9 @@ export class AssetType extends Entity {
 
   @hasMany(() => AssetRecord)
   assetRecords: AssetRecord[];
+
+  @belongsTo(() => User)
+  userId: number;
 
   constructor(data?: Partial<AssetType>) {
     super(data);
