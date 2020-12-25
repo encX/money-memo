@@ -1,2 +1,2 @@
 export * from './asset-record.repository';
-export * from './asset.repository';
+export * from './asset-type.repository';

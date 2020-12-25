@@ -9,7 +9,7 @@ export class AssetRecordRepository extends DefaultCrudRepository<
   AssetRecordRelations
 > {
   constructor(
-    @inject('datasources.pg') dataSource: PgDataSource,
+    @inject('datasources.Pg') dataSource: PgDataSource,
   ) {
     super(AssetRecord, dataSource);
   }

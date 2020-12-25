@@ -1,15 +1,14 @@
-import { belongsTo, Entity, model, property } from '@loopback/repository';
-import { Asset, AssetWithRelations } from './asset.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
 export class AssetRecord extends Entity {
   @property({
     type: 'number',
     id: true,
-    generated: false,
+    generated: true,
   })
   id?: number;
-  
+
   @property({
     type: 'date',
     required: true,
@@ -21,10 +20,11 @@ export class AssetRecord extends Entity {
     required: true,
   })
   amount: number;
-  
-  @belongsTo(() => Asset)
-  assetId: number;
 
+  @property({
+    type: 'number',
+  })
+  assetTypeId?: number;
 
   constructor(data?: Partial<AssetRecord>) {
     super(data);
@@ -32,7 +32,7 @@ export class AssetRecord extends Entity {
 }
 
 export interface AssetRecordRelations {
-  asset?: AssetWithRelations
+  // describe navigational properties here
 }
 
 export type AssetRecordWithRelations = AssetRecord & AssetRecordRelations;
